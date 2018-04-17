@@ -1,0 +1,6 @@
+# Install Spotify for Linux following:
+
+$ sudo git clone https://gist.github.com/fa6258f3ff7b17747ee3.git /opt/
+$ sudo ln -s /opt/sp /usr/local/bin/
+
+See: https://github.com/streetturtle/awesome-wm-widgets/tree/master/spotify-shell
