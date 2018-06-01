@@ -1,4 +1,13 @@
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (require 'recentf)
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 
 ;; Function Blocks
 (defun xah-forward-block (&optional n)
@@ -35,7 +44,11 @@
 	(foreground-color . "#7AADFF")))
 
 (custom-set-faces
-  '(default ((t (:family "Monospace" :foundry "CYRE" :slant normal :weight normal :height 110 :width normal)))))
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:family "Monospace" :foundry "CYRE" :slant normal :weight normal :height 110 :width normal)))))
 
 ;; Disable splash screen and have an empty buffer
 (setf inhibit-splash-screen t)
@@ -90,7 +103,7 @@
 
 ;; Split window in half and cause the 2nd (right)
 ;; buffer to not have any file or text available
-(split-window-right)
+(split-window-horizontally)
 (other-window 2 nil)
 
 (global-set-key [f1] 'shell)
@@ -113,6 +126,35 @@
 (global-set-key (kbd "<M-up>") 'previous-line)
 (global-set-key (kbd "<M-down>") 'next-line)
 
+;; Switch on windmove default key bindings which
+;; allow you to move windows using S-up|down|left|right
+(windmove-default-keybindings)
+
+;; Load rust-mode for Emacs
+(add-to-list 'load-path "~/Projects/rust-mode/rust-mode")
+(autoload 'rust-mode "rust-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
+
 ;; NOTE: If loading any packages, they must be done
 ;; after this point, due to custom load path above.
 
+;; Setup golang syntax highlighting
+(when load-file-name
+  (setq user-emacs-directory (file-name-directory load-file-name)))
+
+(add-to-list 'load-path (locate-user-emacs-file "el-get/el-get"))
+(unless (require 'el-get nil 'noerror)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.githubusercontent.com/dimitri/el-get/master/el-get-install.el")
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
+    ;; golang
+    (el-get-bundle go-mode)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages (quote (##))))
